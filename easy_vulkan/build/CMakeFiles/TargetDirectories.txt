@@ -1,3 +1,0 @@
-/Users/terrapin/workspace/personal/Graphics/EasyVulkan/easy_vulkan/build/CMakeFiles/easy-vulkan.dir
-/Users/terrapin/workspace/personal/Graphics/EasyVulkan/easy_vulkan/build/CMakeFiles/edit_cache.dir
-/Users/terrapin/workspace/personal/Graphics/EasyVulkan/easy_vulkan/build/CMakeFiles/rebuild_cache.dir
