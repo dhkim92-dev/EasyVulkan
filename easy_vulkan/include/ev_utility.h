@@ -19,7 +19,7 @@ using namespace std;
     }                               \
 } 
 
-#ifdef DEBUG
+#ifndef NDEBUG
     #define LOGD(...)   \
     {    \
         cout << "[DEBUG] [" << __FILE__ << ":" << __LINE__ << "] - ";   \

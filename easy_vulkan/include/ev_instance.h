@@ -58,7 +58,9 @@ namespace EasyVulkan {
 
         VkInstanceCreateFlags _flags;
 
-        ApplicationInfo *app_info = nullptr;
+        ApplicationInfo *app_info;
+
+        VkApplicationInfo vk_app_info;
 
         void *_next = NULL;
 
@@ -83,24 +85,23 @@ namespace EasyVulkan {
      * @brief Vulkan Instance Wrapper
     */
     class Instance {
-        
         vector<char *> _extensions; /*! instance extensions that want to be enabled */
 
         vector<char *> _validation_layers; /*! validation layers that want to be enabled*/
 
         VkInstance _instance = NULL; /*! VkInstance */
 
-        void setup_extensions(vector<string> &requests);
+        void setup_extensions(vector<char *> &requests);
 
-        void setup_validation_layers(vector<string> &requests);
+        void setup_validation_layers(vector<char *> &requests);
 
         public:
-
+        
         /**
         * @brief constructor of Instance
         * @details EasyVulkan Instance Constructor. It should be include VkInstanceExtensions and Validation Layers that want to enable.
         */
-        Instance(vector<string> extensions, vector<string> validation_layers);
+        Instance(vector<char *> extensions, vector<char *> validation_layers);
 
         ~Instance();
 
