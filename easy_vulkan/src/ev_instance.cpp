@@ -17,7 +17,9 @@ Instance::Instance(vector<string> extensions, vector<string> validation_layers) 
 }
 
 Instance::~Instance() {
-    vkDestroyInstance(_instance, nullptr);
+    if(_instance != NULL) {
+        vkDestroyInstance(_instance, nullptr);
+    }
 }
 
 void Instance::setup_extensions(vector<string> &requests) {

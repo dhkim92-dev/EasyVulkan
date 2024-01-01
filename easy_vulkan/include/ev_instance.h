@@ -100,7 +100,7 @@ namespace EasyVulkan {
         * @brief constructor of Instance
         * @details EasyVulkan Instance Constructor. It should be include VkInstanceExtensions and Validation Layers that want to enable.
         */
-        Instance(vector<string> extensions, vector<string> validation_layers);
+        explicit Instance(vector<string> extensions, vector<string> validation_layers);
 
         ~Instance();
 
