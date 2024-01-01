@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <cassert>
 #include <iostream>
+#include <vector>
 #include <vulkan/vulkan.h>
 
 using namespace std;

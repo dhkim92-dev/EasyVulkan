@@ -79,7 +79,6 @@ void Instance::setup_validation_layers(vector<char *> &requests) {
 
 void Instance::create(ApplicationInfo *app_info, VkInstanceCreateFlags flags) {
     auto builder = new InstanceCreateInfo();
-    LOGD("FLAG : %d\n", VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR);
 #ifdef __APPLE__
     flags |= VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
 #endif

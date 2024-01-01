@@ -11,7 +11,14 @@ VkInstance create_instance_success()
 {
     vector<char *> instance_extensions = {
         VK_KHR_SURFACE_EXTENSION_NAME,
+#ifdef __APPLE__
         "VK_EXT_metal_surface",
+#endif
+#ifdef __LINUX__
+        "VK_KHR_wayland_surce",
+        "VK_KHR_xcb_surface",
+        "VK_KHR_xlib_surface"
+#endif
     };
 
     vector<char *> validation_layers = {

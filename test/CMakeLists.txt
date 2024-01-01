@@ -14,7 +14,7 @@ ELSEIF(${CMAKE_SYSTEM_NAME} STREQUAL Darwin)
     LINK_DIRECTORIES(/usr/local/lib /usr/lib ${EASY_VULKAN_CORE_LIBRARY_DIRECTORY})
 ELSEIF(${CMAKE_SYSTEM_NAME} STREQUAL LINUX) 
     MESSAGE("[easy-vulkan-test] Build System Linux")
-    INCLUDE_DIRECTORIES(/usr/include /usr/local/include ${EASY_VULKAN_CORE_HEADER_DIRECTORY} include)
+    INCLUDE_DIRECTORIES(/usr/include /usr/local/include ${EASY_VULKAN_CORE_HEADER_DIRECTORY} include) 
     LINK_DIRECTORIES(/usr/local/lib /usr/lib ${EASY_VULKAN_CORE_LIBRARY_DIRECTORY})  
 ENDIF()
 
@@ -27,6 +27,7 @@ FOREACH(F IN LISTS EASY_VULKAN_TEST_FILES)
     get_filename_component(BASE_NAME ${F} NAME_WE)
 
     ADD_EXECUTABLE(${BASE_NAME} src/${BASE_NAME}.cpp)
+    target_include_directories(${BASE_NAME} PUBLIC ${EASY_VULKAN_CORE_HEADER_DIRECTORY})
     target_link_libraries(${BASE_NAME} easy-vulkan)
 ENDFOREACH()
 
