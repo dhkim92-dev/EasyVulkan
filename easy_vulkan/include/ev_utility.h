@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <cassert>
 #include <iostream>
+#include <vector>
 #include <vulkan/vulkan.h>
 
 using namespace std;
@@ -19,7 +20,7 @@ using namespace std;
     }                               \
 } 
 
-#ifdef DEBUG
+#ifndef NDEBUG
     #define LOGD(...)   \
     {    \
         cout << "[DEBUG] [" << __FILE__ << ":" << __LINE__ << "] - ";   \

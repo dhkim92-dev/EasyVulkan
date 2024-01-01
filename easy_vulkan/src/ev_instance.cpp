@@ -11,9 +11,22 @@
 using namespace std;
 using namespace EasyVulkan;
 
-Instance::Instance(vector<string> extensions, vector<string> validation_layers) {
+explicit Instance::Instance(vector<char *> extensions, vector<char *> validation_layers) {
     setup_extensions(extensions);
+
+#ifndef NDEBUG
     setup_validation_layers(validation_layers);
+#endif
+
+    LOGI("Applied extensions size : %lu", _extensions.size());
+    for(auto s : _extensions) {
+        LOGI("Applied extension : %s\n", s);
+    }
+
+    LOGI("Applied validation layers size : %lu", _validation_layers.size());
+    for(auto s : _validation_layers) {
+        LOGI("Applied validation layers : %s\n", s);
+    }
 }
 
 Instance::~Instance() {
@@ -22,59 +35,80 @@ Instance::~Instance() {
     }
 }
 
-void Instance::setup_extensions(vector<string> &requests) {
+void Instance::setup_extensions(vector<char *> &requests) {
     vector<VkExtensionProperties> properties = Utility::enumerate_instance_extensions();
+
+#ifdef __APPLE__
+    _extensions.push_back("VK_KHR_portability_enumeration");
+#endif 
 
     for(auto request : requests) {
         bool found = false;
-        for(auto prop : properties) {
-            if(strcmp(request.c_str(), prop.extensionName)==0) {
-                _extensions.push_back(prop.extensionName);
+        for(auto& prop : properties) {
+            if(strcmp(request, prop.extensionName)==0) {
+                _extensions.push_back(request);
                 found = true;
                 break;
             }
         }
 
         if(!found) {
-            LOGI("Instance extension %s not supported", request.c_str());
+            LOGI("Instance extension %s not supported.", request);
         }
     }
 }
 
-void Instance::setup_validation_layers(vector<string> &requests) {
+void Instance::setup_validation_layers(vector<char *> &requests) {
     vector<VkLayerProperties> properties = Utility::enumerate_instance_layers();
 
-    for(auto request : requests) {
+    for(auto &request : requests) {
         bool found = false;
         for(auto prop : properties) {
-            if(strcmp(request.c_str(), prop.layerName)==0) {
-                _validation_layers.push_back(prop.layerName);
+            if(strcmp(request, prop.layerName)==0) {
+                _validation_layers.push_back(request);
                 found = true;
                 break;
             }
         }
 
         if(!found) {
-            LOGI("Instance Layer %s not supported", request.c_str());
+            LOGI("Instance Layer %s not supported.");
         }
     }
+
+    
 }
 
 void Instance::create(ApplicationInfo *app_info, VkInstanceCreateFlags flags) {
-    LOGD("Instance create start.");
-
     auto builder = new InstanceCreateInfo();
+#ifdef __APPLE__
+    flags |= VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
+#endif
     
-    VkInstanceCreateInfo info = builder
+    builder=builder
         ->application_info(app_info)
         ->device_extensions(_extensions)
         ->validation_layers(_validation_layers)
-        ->flags(flags)
-        ->build();
+        ->flags(flags);
+    LOGD("builder flags : %d\n", flags)
+    VkInstanceCreateInfo info = builder->build();
+
+    LOGD("[Instance::create] VkInstanceCreateInfo applicationInfo.appName : %s", info.pApplicationInfo->pApplicationName);
+    LOGD("[Instance::create] VkInstanceCreateInfo applicationInfo.engineName : %s", info.pApplicationInfo->pEngineName);
+    LOGD("[Instance::create] VkInstanceCreateInfo extensionCount : %d", info.enabledExtensionCount);
+    LOGD("[Instance::create] VkInstanceCreateInfo layersCount : %d", info.enabledLayerCount);
+
+    for(int i = 0 ; i < _extensions.size() ; i++) {
+        LOGD("[Instance::create] VkInstanceCreateInfo extension name : %s", info.ppEnabledExtensionNames[i]);
+    }
+
+    for(int i = 0 ; i < _validation_layers.size() ; i++) {
+        LOGD("[Instance::create] VkInstanceCreateInfo layer name : %s", info.ppEnabledLayerNames[i]);
+    }
+
 
     CHECK_VK_RESULT( vkCreateInstance(&info, nullptr, &_instance) );
     delete builder;
-    LOGD("Instance create end.");
 }
 
 VkInstance Instance::instance() {
@@ -138,12 +172,15 @@ InstanceCreateInfo* InstanceCreateInfo::application_info(ApplicationInfo *info) 
 }
 
 InstanceCreateInfo* InstanceCreateInfo::device_extensions(vector<char *> value) {
-    copy( value.begin(), value.end(), extensions.begin() );
+    copy( value.begin(), value.end(), back_inserter(extensions));
     return this;
 }
 
 InstanceCreateInfo* InstanceCreateInfo::validation_layers(vector<char *> value) {
-    copy(value.begin(), value.end(), validations.begin());
+    copy(value.begin(), value.end(), back_inserter(validations));
+    for(auto s : value) {
+        printf("%s\n", s);
+    }
     return this;
 }
 
@@ -161,11 +198,7 @@ VkInstanceCreateInfo InstanceCreateInfo::build() {
     VkInstanceCreateInfo info = {};
     info.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 
-    if(app_info == nullptr) {
-        LOGE("ApplicationInfo is not provided.")
-    }
-
-    VkApplicationInfo vk_app_info = app_info->build();
+    vk_app_info = app_info->build();
     info.pApplicationInfo = &vk_app_info;
 
     if(!extensions.empty()) {
@@ -177,13 +210,8 @@ VkInstanceCreateInfo InstanceCreateInfo::build() {
         info.enabledLayerCount = static_cast<uint32_t>(validations.size());
         info.ppEnabledLayerNames = validations.data();
     }
-
-    if(_flags > 0) {
-        info.flags = _flags;
-    }
-
+    info.flags = _flags;
     info.pNext = _next;
-
     return info;
 }
 
