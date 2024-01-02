@@ -3,6 +3,12 @@
 
 #include <vulkan/vulkan.h>
 #include <vector>
+#include <stdexcept>
+#include <string>
+#include <cassert>
+#include <algorithm>
+#include "builder/ev_queue_ci.h"
+#include "builder/ev_device_ci.h"
 #include "ev_instance.h"
 #include "ev_utility.h"
 
@@ -11,8 +17,11 @@ using namespace std;
 namespace EasyVulkan {
 
     struct QueueFamilyIndice {
+
         uint32_t graphics;
+
         uint32_t compute;
+
         uint32_t transfer;
     };
 
@@ -20,25 +29,53 @@ namespace EasyVulkan {
         
         Instance *instance;
 
-        VkPhysicalDevice gpu = NULL;
+        VkPhysicalDevice gpu = VK_NULL_HANDLE;
 
-        VkDevice device = NULL;
+        VkDevice _device = VK_NULL_HANDLE;
 
-        VkPhysicalDeviceProperties properties;
+        VkPhysicalDeviceProperties _device_properties;
 
-        VkPhysicalDeviceFeatures features;
+        VkPhysicalDeviceFeatures _features;
 
-        VkPhysicalDeviceFeatures enabled_features;
+        VkPhysicalDeviceFeatures _enabled_features;
+        
+        VkPhysicalDeviceMemoryProperties _memory_properties;
 
-        vector<char *> extensions;
+        vector<string> _supported_extensions;
 
-        vector<char *> enabled_extensions;
+        vector<VkQueueFamilyProperties> _queue_family_properties;
 
+        QueueFamilyIndice _queue_family_indices;
+
+        bool is_support_extension(const string extension_name);
+
+        uint32_t get_queue_family_index(VkQueueFlags flags) const;
 
         public :
+
         
-        explicit Device(Instance *instance, vector<char *> _extensions, uint32_t gpu_id = 0);
-    }
+        explicit Device(Instance *_instance, uint32_t gpu_id = 0);
+
+        ~Device();
+
+        void create_logical_device(VkPhysicalDeviceFeatures enabled_features, vector<char *> enabled_extensions, VkQueueFlags queue_types = VK_QUEUE_GRAPHICS_BIT, void *next = VK_NULL_HANDLE, bool use_swapchain = false);
+
+        VkPhysicalDevice physical_device();
+
+        VkDevice device();
+
+        VkPhysicalDeviceFeatures features();
+
+        VkPhysicalDeviceFeatures enabled_features();
+
+        VkPhysicalDeviceProperties device_properties();
+
+        VkQueueFamilyProperties queue_family_properties();
+
+        vector<string> supported_extensions();
+
+        VkFormat get_supported_depth_format(bool check_sampling);
+    };
 }
 
 #endif

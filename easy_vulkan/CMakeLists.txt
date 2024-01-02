@@ -24,8 +24,8 @@ ELSE()
     MESSAGE("[easy-vulkan] Not Supported Platform.")
 ENDIF()
 
-FILE(GLOB EASY_VULKAN_CORE_SOURCE src/*.cpp)
-FILE(GLOB EASY_VULKAN_CORE_HEADER include/*.h)
+FILE(GLOB EASY_VULKAN_CORE_SOURCE src/*.cpp src/**/*.cpp)
+FILE(GLOB EASY_VULKAN_CORE_HEADER include/*.h include/**/*.h)
 
 ADD_LIBRARY(${CMAKE_PROJECT_NAME} SHARED
     ${EASY_VULKAN_CORE_HEADER}
