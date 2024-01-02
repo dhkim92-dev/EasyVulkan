@@ -82,6 +82,7 @@ Device::~Device() {
     }
 
     vkDestroyDevice(_device, nullptr);
+    _device = VK_NULL_HANDLE;
 }
 
 void Device::create_logical_device(

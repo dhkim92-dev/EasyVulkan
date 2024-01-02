@@ -23,7 +23,7 @@ namespace EasyVulkan {
 
         vector<char *> _validation_layers; /*! validation layers that want to be enabled*/
 
-        VkInstance _instance = VK_NULL_HANDLE; /*! VkInstance */
+        VkInstance _instance = NULL; /*! VkInstance */
 
         void setup_extensions(vector<char *> &requests);
 

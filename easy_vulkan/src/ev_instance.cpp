@@ -30,9 +30,11 @@ Instance::Instance(vector<char *> extensions, vector<char *> validation_layers) 
 }
 
 Instance::~Instance() {
-    if(_instance != NULL) {
-        vkDestroyInstance(_instance, nullptr);
+    if(_instance == VK_NULL_HANDLE) {
+        return;
     }
+    vkDestroyInstance(_instance, nullptr);
+    _instance = VK_NULL_HANDLE;
 }
 
 void Instance::setup_extensions(vector<char *> &requests) {

@@ -41,19 +41,34 @@ Instance* create_instance()
     return instance;
 }
 
+Instance *instance;
+Device *device;
+
 TEST(EasyVulkanDeviceTest, device_create_test) {
-    Instance *instance = create_instance();
-    Device *device = new Device(instance, 0);
+    instance = create_instance();
+    device = new Device(instance, 0);
 
     EXPECT_NE(device->physical_device(), (VkPhysicalDevice)(VK_NULL_HANDLE));
 
-    delete device;
-    delete instance;
+    //delete device;
+    //delete instance;
+}
+
+TEST(EasyVulkanDeviceTest, logical_device_create_test) {
+    VkPhysicalDeviceFeatures features{};
+    device->create_logical_device(
+        features, {}
+    );
+
+    EXPECT_NE(device->device(), (VkDevice)(VK_NULL_HANDLE));
 }
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+    auto ret = RUN_ALL_TESTS();
+    delete device;
+    delete instance;
+    return ret;
 }
 
 #endif
