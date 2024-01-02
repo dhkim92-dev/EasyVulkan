@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/ev_instance_test.dir/src/ev_instance_test.cpp.o -o bin/ev_instance_test  -Wl,-rpath,/home/cenovis/workspace/EasyVulkan/build/easy_vulkan/lib -lvulkan -lgtest ../easy_vulkan/lib/libeasy-vulkan.so -lvulkan 

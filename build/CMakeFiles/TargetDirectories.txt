@@ -1,9 +1,0 @@
-/home/cenovis/workspace/EasyVulkan/build/CMakeFiles/edit_cache.dir
-/home/cenovis/workspace/EasyVulkan/build/CMakeFiles/rebuild_cache.dir
-/home/cenovis/workspace/EasyVulkan/build/easy_vulkan/CMakeFiles/easy-vulkan.dir
-/home/cenovis/workspace/EasyVulkan/build/easy_vulkan/CMakeFiles/edit_cache.dir
-/home/cenovis/workspace/EasyVulkan/build/easy_vulkan/CMakeFiles/rebuild_cache.dir
-/home/cenovis/workspace/EasyVulkan/build/test/CMakeFiles/ev_device_test.dir
-/home/cenovis/workspace/EasyVulkan/build/test/CMakeFiles/ev_instance_test.dir
-/home/cenovis/workspace/EasyVulkan/build/test/CMakeFiles/edit_cache.dir
-/home/cenovis/workspace/EasyVulkan/build/test/CMakeFiles/rebuild_cache.dir
