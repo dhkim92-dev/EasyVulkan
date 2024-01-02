@@ -58,7 +58,9 @@ namespace EasyVulkan {
 
         vector<VkLayerProperties> enumerate_instance_layers();
 
-        vector<VkExtensionProperties> enuemrate_device_extensions(VkPhysicalDevice gpu);
+        vector<VkQueueFamilyProperties> enumerate_queue_families(VkPhysicalDevice physical_device);
+
+        vector<VkExtensionProperties> enumerate_device_extensions(VkPhysicalDevice physical_device);
     }
 }
 

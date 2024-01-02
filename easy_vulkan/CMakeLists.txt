@@ -12,8 +12,8 @@ IF(${OS} STREQUAL Windows)
     MESSAGE("[easy-vulkan] Build System Windows")
 ELSEIF(${OS} STREQUAL Darwin)
     MESSAGE("[easy-vulkan] Build System MacOS")
-    INCLUDE_DIRECTORIES(${EASY_VULKAN_HEADER_DIR} ${VULKAN_SDK}/include)
-    LINK_DIRECTORIES(${VULKAN_SDK}/lib)
+    INCLUDE_DIRECTORIES(${EASY_VULKAN_HEADER_DIR} /usr/local/include /usr/include)
+    LINK_DIRECTORIES(/usr/local/lib /usr/lib)
     LINK_LIBRARIES(vulkan)
 ELSEIF(${OS} STREQUAL Linux) 
     MESSAGE("[easy-vulkan] Build System Linux")
@@ -24,8 +24,8 @@ ELSE()
     MESSAGE("[easy-vulkan] Not Supported Platform.")
 ENDIF()
 
-FILE(GLOB EASY_VULKAN_CORE_SOURCE src/*.cpp)
-FILE(GLOB EASY_VULKAN_CORE_HEADER include/*.h)
+FILE(GLOB EASY_VULKAN_CORE_SOURCE src/*.cpp src/**/*.cpp)
+FILE(GLOB EASY_VULKAN_CORE_HEADER include/*.h include/**/*.h)
 
 ADD_LIBRARY(${CMAKE_PROJECT_NAME} SHARED
     ${EASY_VULKAN_CORE_HEADER}

@@ -61,16 +61,16 @@ vector<VkExtensionProperties> Utility::enumerate_instance_extensions() {
     return properties;
 }
 
-vector<VkExtensionProperties> Utility::enuemrate_device_extensions(VkPhysicalDevice gpu) {
+vector<VkExtensionProperties> Utility::enumerate_device_extensions(VkPhysicalDevice physical_device) {
     uint32_t count = 0;
-    vkEnumerateDeviceExtensionProperties(gpu, nullptr, &count, nullptr);
+    vkEnumerateDeviceExtensionProperties(physical_device, nullptr, &count, nullptr);
     vector<VkExtensionProperties> properties(count);
-    vkEnumerateDeviceExtensionProperties(gpu, nullptr, &count, properties.data());
+    vkEnumerateDeviceExtensionProperties(physical_device, nullptr, &count, properties.data());
 
     return properties;
 }
 
-vector<VkPhysicalDevice> enumerate_physical_devices(VkInstance instance) {
+vector<VkPhysicalDevice> Utility::enumerate_physical_devices(VkInstance instance) {
     uint32_t count = 0;
     vkEnumeratePhysicalDevices(instance, &count, nullptr);
     vector<VkPhysicalDevice> gpus(count);
@@ -84,6 +84,16 @@ vector<VkLayerProperties> Utility::enumerate_instance_layers() {
     vkEnumerateInstanceLayerProperties(&count, nullptr);
     vector<VkLayerProperties> properties(count);
     vkEnumerateInstanceLayerProperties(&count, properties.data());
+
+    return properties;
+}
+
+vector<VkQueueFamilyProperties> Utility::enumerate_queue_families(VkPhysicalDevice physical_device) {
+    uint32_t count = 0;
+    vector<VkQueueFamilyProperties> properties;
+    vkGetPhysicalDeviceQueueFamilyProperties(physical_device, &count, nullptr);
+    properties.resize(count);
+    vkGetPhysicalDeviceQueueFamilyProperties(physical_device, &count, properties.data());
 
     return properties;
 }
