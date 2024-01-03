@@ -14,7 +14,7 @@ VkInstance create_instance_success()
         "VK_EXT_metal_surface",
 #endif
 #ifdef __LINUX__
-        "VK_KHR_wayland_surce",
+        "VK_KHR_wayland_surface",
         "VK_KHR_xcb_surface",
         "VK_KHR_xlib_surface"
 #endif
