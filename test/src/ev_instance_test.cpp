@@ -6,7 +6,7 @@
 
 using namespace EasyVulkan;
 
-VkInstance create_instance_success()
+VkInstance create_instance_success(bool validation)
 {
     vector<char *> instance_extensions = {
         VK_KHR_SURFACE_EXTENSION_NAME,
@@ -28,6 +28,7 @@ VkInstance create_instance_success()
     LOGD("EasyVulkan::Instance created.");
 
     Instance instance(instance_extensions, validation_layers);
+    instance.set_debug(validation);
     EasyVulkan::Info::ApplicationInfo* app_info = new EasyVulkan::Info::ApplicationInfo();
     app_info->api_version(VK_API_VERSION_1_3)
     ->app_name("easy-vulkan-test")
@@ -41,8 +42,12 @@ VkInstance create_instance_success()
     return instance.instance();
 }
 
-TEST(EasyVulkanInstanceTest, InstanceCreate) {
-    EXPECT_NE(create_instance_success(), (VkInstance)NULL);
+TEST(EasyVulkanInstanceTest, instance_create_validation_enabled) {
+    EXPECT_NE(create_instance_success(true), (VkInstance)NULL);
+}
+
+TEST(EasyVulkanInstanceTest, instance_create_validation_disabled) {
+    EXPECT_NE(create_instance_success(false), (VkInstance)NULL);
 }
 
 int main(int argc, char **argv) {

@@ -7,6 +7,7 @@
 #include <cassert>
 #include <unordered_set>
 #include "ev_instance.h"
+#include "ev_debug.h"
 
 using namespace std;
 using namespace EasyVulkan;
@@ -30,6 +31,10 @@ Instance::Instance(vector<char *> extensions, vector<char *> validation_layers) 
 }
 
 Instance::~Instance() {
+    if(_debug) {
+        Debug::free_debug_callback(_instance);
+    }
+
     if(_instance == VK_NULL_HANDLE) {
         return;
     }
@@ -86,12 +91,32 @@ void Instance::create(Info::ApplicationInfo *app_info, VkInstanceCreateFlags fla
 #ifdef __APPLE__
     flags |= VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
 #endif
-    
-    builder=builder
-        ->application_info(app_info)
+    char *validation_layer_name = "VK_LAYER_KHRONOS_validation";
+
+    if(_debug) {
+        _extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+        auto supported_layers = Utility::enumerate_instance_layers();
+
+        bool present = false;
+        for(auto layer : supported_layers) {
+            if(strcmp(layer.layerName, validation_layer_name) == 0) {
+                _validation_layers.push_back(validation_layer_name);
+                present = true;
+                break;
+            }
+        }
+
+        if(!present) {
+            LOGE("%s not present, validation is disabled.", validation_layer_name);
+        }
+
+        builder->validation_layers(_validation_layers);
+    }
+
+    builder->application_info(app_info)
         ->device_extensions(_extensions)
-        ->validation_layers(_validation_layers)
         ->flags(flags);
+    
     LOGD("builder flags : %d\n", flags)
     VkInstanceCreateInfo info = builder->build();
 
@@ -108,8 +133,13 @@ void Instance::create(Info::ApplicationInfo *app_info, VkInstanceCreateFlags fla
         LOGD("[Instance::create] VkInstanceCreateInfo layer name : %s", info.ppEnabledLayerNames[i]);
     }
 
-
     CHECK_VK_RESULT( vkCreateInstance(&info, nullptr, &_instance) );
+    
+    if(_debug) {
+        // LOGI("[Instance::create] DebugMessenger set.");
+        Debug::setup_debugging(_instance);
+    }
+
     delete builder;
 }
 
@@ -125,6 +155,17 @@ vector<char *> Instance::validation_layers() {
     return _validation_layers;
 }
 
+void Instance::set_debug(bool value) {
+    if(_instance != VK_NULL_HANDLE) {
+        LOGE("Impossible to change debug mode after VkInstance is created.")
+        return;
+    }
 
+    _debug = value;
+}
+
+bool Instance::debug() {
+    return _debug;
+}
 
 #endif

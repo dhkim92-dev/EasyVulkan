@@ -23,6 +23,8 @@ namespace EasyVulkan{
 
             vector<QueueCreateInfo *> _queue_ci;
 
+            vector<VkDeviceQueueCreateInfo> device_queue_ci;
+
             public:
 
             DeviceCreateInfo* enabled_extensions(vector<char *> values);

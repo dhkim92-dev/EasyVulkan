@@ -33,9 +33,9 @@ using namespace std;
 
 #define LOGE(...)    \
 {    \
-    cout << "[ERROR] [" << __FILE__ << ":" << __LINE__ << "] - ";    \
+    cerr << "[ERROR] [" << __FILE__ << ":" << __LINE__ << "] - ";    \
     printf(__VA_ARGS__);    \
-    cout << "\n";    \
+    cerr << "\n";    \
 }
 
 #define LOGI(...)    \
@@ -44,6 +44,22 @@ using namespace std;
     printf(__VA_ARGS__);    \
     cout << "\n";    \
 }
+
+#define LOGV(...)    \
+{    \
+    cout << "[VERBOSE] [" __FILE__ << ":" << __LINE__<< "] - ";    \
+    printf(__VA_ARGS__);    \
+    cout << "\n";    \
+}
+
+#define LOGW(...)    \
+{    \
+    cout << "[WARNING] [" __FILE__ << ":" << __LINE__<< "] - ";    \
+    printf(__VA_ARGS__);    \
+    cout << "\n";    \
+}
+
+
 
 namespace EasyVulkan {
     namespace Utility {

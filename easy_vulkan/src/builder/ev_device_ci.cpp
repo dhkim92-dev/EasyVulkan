@@ -41,28 +41,24 @@ DeviceCreateInfo* DeviceCreateInfo::queue_create_info(vector<QueueCreateInfo *> 
  * @return {VkDeviceCreateInfo}
 */
 VkDeviceCreateInfo DeviceCreateInfo::build() {
-    vector<VkDeviceQueueCreateInfo> q_cis;
-    
-    for(auto ci : _queue_ci) {
-        q_cis.push_back(ci->build());
+    for(auto *ci : _queue_ci) {
+        device_queue_ci.push_back(ci->build());
     }
 
     VkDeviceCreateInfo info = {};
     info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+    info.pNext = _next;
+    info.pEnabledFeatures = &_enabled_features;
 
     if(!_enabled_extensions.empty()) {
         info.enabledExtensionCount=static_cast<uint32_t>(_enabled_extensions.size());
         info.ppEnabledExtensionNames = _enabled_extensions.data();
     }
 
-    info.pEnabledFeatures = &_enabled_features;
-    info.queueCreateInfoCount = static_cast<uint32_t>(q_cis.size());
-    info.pQueueCreateInfos = q_cis.data();
-    info.pNext = _next;
-
-    // deprecated
-    // info.enabledLayerCount = 0;
-    // info.ppEnabledLayerNames = nullptr;
+    if(!device_queue_ci.empty()) {
+        info.queueCreateInfoCount = static_cast<uint32_t>(device_queue_ci.size());
+        info.pQueueCreateInfos = device_queue_ci.data();
+    }
 
     return info;
 }

@@ -3,6 +3,7 @@
 
 #include <gtest/gtest.h>
 #include "easy_vulkan.h"
+#include <iostream>
 
 using namespace EasyVulkan;
 
@@ -28,46 +29,44 @@ Instance* create_instance()
     LOGD("EasyVulkan::Instance created.");
 
     Instance *instance = new Instance(instance_extensions, validation_layers);
+    instance->set_debug(true);
     EasyVulkan::Info::ApplicationInfo* app_info = new EasyVulkan::Info::ApplicationInfo();
     app_info->api_version(VK_API_VERSION_1_3)
     ->app_name("easy-vulkan-test")
     ->engine_name("easy-vulkan-test")
     ->app_version(VK_MAKE_VERSION(1, 0, 0))
     ->engine_version(VK_MAKE_VERSION(1, 0, 0));
-
     instance->create(app_info);
-    delete app_info;
 
+    delete app_info;
     return instance;
 }
 
-Instance *instance;
-Device *device;
 
 TEST(EasyVulkanDeviceTest, device_create_test) {
-    instance = create_instance();
-    device = new Device(instance, 0);
-
+    Instance *instance = create_instance();
+    Device *device = new Device(instance, 0);
     EXPECT_NE(device->physical_device(), (VkPhysicalDevice)(VK_NULL_HANDLE));
-
-    //delete device;
-    //delete instance;
+    delete device;
+    delete instance;
 }
 
 TEST(EasyVulkanDeviceTest, logical_device_create_test) {
+    Instance *instance = create_instance();
+    Device *device = new Device(instance, 0);
     VkPhysicalDeviceFeatures features{};
     device->create_logical_device(
         features, {}
     );
 
     EXPECT_NE(device->device(), (VkDevice)(VK_NULL_HANDLE));
+    delete device;
+    delete instance;
 }
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     auto ret = RUN_ALL_TESTS();
-    delete device;
-    delete instance;
     return ret;
 }
 

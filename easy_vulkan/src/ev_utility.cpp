@@ -72,8 +72,9 @@ vector<VkExtensionProperties> Utility::enumerate_device_extensions(VkPhysicalDev
 
 vector<VkPhysicalDevice> Utility::enumerate_physical_devices(VkInstance instance) {
     uint32_t count = 0;
+    vector<VkPhysicalDevice> gpus;
     vkEnumeratePhysicalDevices(instance, &count, nullptr);
-    vector<VkPhysicalDevice> gpus(count);
+    gpus.resize(count);
     vkEnumeratePhysicalDevices(instance, &count, gpus.data());
 
     return gpus;
