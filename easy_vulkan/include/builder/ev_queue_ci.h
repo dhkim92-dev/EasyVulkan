@@ -19,7 +19,7 @@ namespace EasyVulkan {
 
             uint32_t _count = 0;
 
-            float _priorities = 0.0f;
+            float _priorities = 1.0f;
 
             uint32_t _index = 0;
 

@@ -58,7 +58,7 @@ namespace EasyVulkan {
 
         ~Device();
 
-        void create_logical_device(VkPhysicalDeviceFeatures enabled_features, vector<char *> enabled_extensions, VkQueueFlags queue_types = VK_QUEUE_GRAPHICS_BIT, void *next = VK_NULL_HANDLE, bool use_swapchain = false);
+        void create_logical_device(VkPhysicalDeviceFeatures enabled_features, vector<char *> enabled_extensions, VkQueueFlags queue_types = VK_QUEUE_GRAPHICS_BIT, void *next = nullptr, bool use_swapchain = false);
 
         VkPhysicalDevice physical_device();
 
@@ -70,7 +70,9 @@ namespace EasyVulkan {
 
         VkPhysicalDeviceProperties device_properties();
 
-        VkQueueFamilyProperties queue_family_properties();
+        VkPhysicalDeviceMemoryProperties memory_properties();
+
+        vector<VkQueueFamilyProperties> queue_family_properties();
 
         vector<string> supported_extensions();
 

@@ -47,8 +47,8 @@ uint32_t Device::get_queue_family_index(VkQueueFlags flags) const {
 
 Device::Device(Instance *_instance, uint32_t gpu_id) 
 : instance(_instance) {
-    LOGI("EasyVulkan Device create start.")
     vector<VkPhysicalDevice> gpus = Utility::enumerate_physical_devices(instance->instance());
+    LOGI("Found %d vulkan devices", gpus.size())
 
     if(gpus.size() < 1) {
         throw runtime_error("No Vulkan Support Devices");
@@ -62,14 +62,10 @@ Device::Device(Instance *_instance, uint32_t gpu_id)
 
     _queue_family_properties = Utility::enumerate_queue_families(gpu);
     
-    LOGI("EasyVulkan PhysicalDevice queue family properties get.")
     vkGetPhysicalDeviceProperties(gpu, &_device_properties);
-    LOGI("EasyVulkan PhysicalDevice device properties get.")
     vkGetPhysicalDeviceMemoryProperties(gpu, &_memory_properties);
-    LOGI("EasyVulkan PhysicalDevice memory properties get.")
     vkGetPhysicalDeviceFeatures(gpu, &_features);
     auto extensions = Utility::enumerate_device_extensions(gpu);
-    LOGI("EasyVulkan PhysicalDevice extensions get.")
 
     for(auto extension : extensions) {
         _supported_extensions.push_back(extension.extensionName);
@@ -77,10 +73,10 @@ Device::Device(Instance *_instance, uint32_t gpu_id)
 }
 
 Device::~Device() {
-    if(_device != VK_NULL_HANDLE) {
+    if(_device == VK_NULL_HANDLE) {
         return ;
     }
-
+    LOGI("Logical Device %p will be destoryed.", _device);
     vkDestroyDevice(_device, nullptr);
     _device = VK_NULL_HANDLE;
 }
@@ -93,6 +89,7 @@ void Device::create_logical_device(
     bool use_swapchain) {
     
     if(_device != VK_NULL_HANDLE) {
+        LOGI("[Device::create_logical_device] Device already exists.");
         return ;
     }
 
@@ -103,6 +100,7 @@ void Device::create_logical_device(
         _queue_family_indices.graphics = get_queue_family_index(VK_QUEUE_GRAPHICS_BIT);
         auto *ci = new Info::QueueCreateInfo();
         ci = ci->queue_count(1)
+        ->queue_priorities(1.0f)
         ->queue_index(_queue_family_indices.graphics);
         queue_create_infos.push_back(ci);
     } else {
@@ -128,6 +126,7 @@ void Device::create_logical_device(
     } else {
         _queue_family_indices.transfer = _queue_family_indices.graphics;
     }
+
 
     vector<char*> device_extensions(enabled_extensions);
 
@@ -162,8 +161,9 @@ void Device::create_logical_device(
         ->next(next)
         ->build();
 
-    CHECK_VK_RESULT(vkCreateDevice(gpu, &device_create_info, nullptr, &_device));
 
+    CHECK_VK_RESULT(vkCreateDevice(gpu, &device_create_info, nullptr, &_device));
+    LOGI("Logical Device created : %p", _device);
     _enabled_features = enabled_features;
 
     for(auto *queue_create_info : queue_create_infos) {
@@ -182,11 +182,28 @@ VkDevice Device::device() {
 }
 
 VkPhysicalDeviceFeatures Device::features() {
+    assert(gpu == VK_NULL_HANDLE);
     return _features;
 }
 
 VkPhysicalDeviceFeatures Device::enabled_features() {
+    assert(gpu == VK_NULL_HANDLE);
     return _enabled_features;
+}
+
+VkPhysicalDeviceProperties Device::device_properties() {
+    assert(gpu == VK_NULL_HANDLE);
+    return _device_properties;
+}
+
+VkPhysicalDeviceMemoryProperties Device::memory_properties() {
+    assert(gpu == VK_NULL_HANDLE);
+    return _memory_properties;
+}
+
+vector<VkQueueFamilyProperties> Device::queue_family_properties() {
+    assert(gpu == VK_NULL_HANDLE);
+    return _queue_family_properties;
 }
 
 vector<string> Device::supported_extensions() {

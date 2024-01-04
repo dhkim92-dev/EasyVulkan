@@ -25,6 +25,8 @@ namespace EasyVulkan {
 
         VkInstance _instance = VK_NULL_HANDLE; /*! VkInstance */
 
+        bool _debug = false;
+
         void setup_extensions(vector<char *> &requests);
 
         void setup_validation_layers(vector<char *> &requests);
@@ -52,9 +54,19 @@ namespace EasyVulkan {
         vector<char *> extensions();
 
         /**
-         * @brief geter of Vulkan Validation layers name list
+         * @brief getter of Vulkan Validation layers name list
         */
         vector<char *> validation_layers();
+
+        /**
+         * @brief setter of Vulkan validation layer enabled or disabled
+        */
+        void set_debug(bool value);
+
+        /**
+         * @brief getter of Vulkan validation layer enabled or disabled.
+        */
+        bool debug();
     };
 }
 
