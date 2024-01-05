@@ -21,13 +21,13 @@ namespace EasyVulkan
             stringstream ss;
             ss << "[" << callback_data->messageIdNumber << "][" << callback_data->pMessageIdName << "] : " << callback_data->pMessage;
             if(severity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT) {
-                LOGV("[Vulkan Validation] : %s", ss.str().c_str());
+                LOGV("\n[Vulkan Validation] : %s", ss.str().c_str());
             }else if(severity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT) {
-                LOGI("[Vulkan Validation] : %s", ss.str().c_str());
+                LOGI("\n[Vulkan Validation] : %s", ss.str().c_str());
             }else if(severity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT) {
-                LOGW("[Vulkan Validation] : %s", ss.str().c_str());
+                LOGW("\n[Vulkan Validation] : %s", ss.str().c_str());
             }else if(severity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT) {
-                LOGE("[Vulkan Validation] : %s", ss.str().c_str());
+                LOGE("\n[Vulkan Validation] : %s", ss.str().c_str());
             }
 
             return VK_FALSE;

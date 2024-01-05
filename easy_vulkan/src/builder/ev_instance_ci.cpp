@@ -61,13 +61,13 @@ InstanceCreateInfo* InstanceCreateInfo::application_info(ApplicationInfo *info) 
     return this;
 }
 
-InstanceCreateInfo* InstanceCreateInfo::device_extensions(vector<char *> value) {
+InstanceCreateInfo* InstanceCreateInfo::device_extensions(vector<const char *> value) {
     copy( value.begin(), value.end(), back_inserter(extensions));
 
     return this;
 }
 
-InstanceCreateInfo* InstanceCreateInfo::validation_layers(vector<char *> value) {
+InstanceCreateInfo* InstanceCreateInfo::validation_layers(vector<const char *> value) {
     copy(value.begin(), value.end(), back_inserter(validations));
 
     for(auto s : value) {

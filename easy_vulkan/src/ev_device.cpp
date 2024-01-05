@@ -48,7 +48,7 @@ uint32_t Device::get_queue_family_index(VkQueueFlags flags) const {
 Device::Device(Instance *_instance, uint32_t gpu_id) 
 : instance(_instance) {
     vector<VkPhysicalDevice> gpus = Utility::enumerate_physical_devices(instance->instance());
-    LOGI("Found %d vulkan devices", gpus.size())
+    LOGI("Found %ld vulkan devices", gpus.size())
 
     if(gpus.size() < 1) {
         throw runtime_error("No Vulkan Support Devices");
@@ -83,7 +83,7 @@ Device::~Device() {
 
 void Device::create_logical_device(
     VkPhysicalDeviceFeatures enabled_features, 
-    vector<char *> enabled_extensions,
+    vector<const char *> enabled_extensions,
     VkQueueFlags queue_types, 
     void* next, 
     bool use_swapchain) {
@@ -128,7 +128,7 @@ void Device::create_logical_device(
     }
 
 
-    vector<char*> device_extensions(enabled_extensions);
+    vector<const char*> device_extensions(enabled_extensions);
 
     if(use_swapchain) {
         device_extensions.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);

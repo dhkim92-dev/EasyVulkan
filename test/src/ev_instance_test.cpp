@@ -8,7 +8,7 @@ using namespace EasyVulkan;
 
 VkInstance create_instance_success(bool validation)
 {
-    vector<char *> instance_extensions = {
+    vector<const char *> instance_extensions = {
         VK_KHR_SURFACE_EXTENSION_NAME,
 #ifdef __APPLE__
         "VK_EXT_metal_surface",
@@ -20,7 +20,7 @@ VkInstance create_instance_success(bool validation)
 #endif
     };
 
-    vector<char *> validation_layers = {
+    vector<const char *> validation_layers = {
         "VK_LAYER_KHRONOS_validation",
         "VK_LAYER_KHRONOS_profiles"
     };

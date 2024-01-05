@@ -47,9 +47,9 @@ namespace EasyVulkan {
         */
         class InstanceCreateInfo {
 
-            vector<char *> extensions;
+            vector<const char *> extensions;
 
-            vector<char *> validations;
+            vector<const char *> validations;
 
             VkInstanceCreateFlags _flags;
 
@@ -63,9 +63,9 @@ namespace EasyVulkan {
 
             InstanceCreateInfo* application_info(ApplicationInfo *info);
 
-            InstanceCreateInfo* device_extensions(vector<char *> value);
+            InstanceCreateInfo* device_extensions(vector<const char *> value);
             
-            InstanceCreateInfo* validation_layers(vector<char *> value);
+            InstanceCreateInfo* validation_layers(vector<const char *> value);
 
             InstanceCreateInfo* flags(VkInstanceCreateFlags value);
 

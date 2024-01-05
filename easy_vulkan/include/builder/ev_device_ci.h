@@ -17,7 +17,7 @@ namespace EasyVulkan{
 
             void *_next = NULL;
 
-            vector<char *> _enabled_extensions;
+            vector<const char *> _enabled_extensions;
 
             VkPhysicalDeviceFeatures _enabled_features;
 
@@ -27,7 +27,7 @@ namespace EasyVulkan{
 
             public:
 
-            DeviceCreateInfo* enabled_extensions(vector<char *> values);
+            DeviceCreateInfo* enabled_extensions(vector<const char *> values);
 
             DeviceCreateInfo* enabled_features(VkPhysicalDeviceFeatures value);
 
