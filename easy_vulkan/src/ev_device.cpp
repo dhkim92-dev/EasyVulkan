@@ -129,7 +129,6 @@ void Device::create_logical_device(
 
 
     vector<const char*> device_extensions(enabled_extensions);
-
     if(use_swapchain) {
         device_extensions.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
     }

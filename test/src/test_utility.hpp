@@ -48,11 +48,11 @@ Instance* create_ev_instance()
     return instance;
 }
 
-Device* create_ev_device(Instance *instance, vector<const char*> enabled_extensions) 
+Device* create_ev_device(Instance *instance, vector<const char*> enabled_extensions, uint32_t gpu_id) 
 {
     assert(instance != nullptr);
     cout << "instance id : " << instance << endl;
-    Device* device = new Device(instance, 0);
+    Device* device = new Device(instance, gpu_id);
     VkPhysicalDeviceFeatures features{};
     device->create_logical_device(
         features, 
@@ -73,7 +73,7 @@ Instance* create_instance_with_surface(GLFWwindow *window, VkSurfaceKHR *surface
     };
 
     for(auto name : instance_extensions) {
-        cout << name << endl;
+        LOGI("Instance extension requested : %s", name);
     }
     Instance *instance = new Instance(instance_extensions, validation_layers);
     cout << "instance id : " << instance << endl;
@@ -94,6 +94,8 @@ Instance* create_instance_with_surface(GLFWwindow *window, VkSurfaceKHR *surface
 GLFWwindow* create_glfw_window() {
     GLFWwindow *window;
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+
     window = glfwCreateWindow(1024, 576, "Vulkan", nullptr, nullptr);
     if(!window){
 		throw std::runtime_error("glfwWindowCreate failed error.\n");

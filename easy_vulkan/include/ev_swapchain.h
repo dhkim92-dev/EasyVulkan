@@ -42,6 +42,10 @@ namespace EasyVulkan {
 
         vector<SwapchainBuffer> _buffers;
 
+        void setup_present_queue();
+
+        void setup_surface_formats();
+
         void get_surface_capabilities(VkSurfaceCapabilitiesKHR *capabilities);
 
         void get_present_modes(uint32_t *count, VkPresentModeKHR* present_modes);

@@ -3,8 +3,8 @@ SET(EASY_VULKAN_CORE_HEADER_DIRECTORY ${PROJECT_SOURCE_DIR}/build/easy_vulkan/in
 SET(EASY_VULKAN_CORE_LIBRARY_DIRECTORY ${PROJECT_SOURCE_DIR}/build/easy_vulkan/lib)
 SET(GLFW_LIBRARY_DIRECTORY ${PROJECT_SOURCE_DIR}/build/glfw/src)
 SET(GLFW_HEADER_DIRECTORY ${PROJECT_SOURCE_DIR}/externals/glfw/include)
-add_definitions(-DNDEBUG)
-
+# add_definitions(-DNDEBUG)
+add_definitions(-DEV_DEBUG)
 MESSAGE("[easy-vulkan-test] core include path : ${EASY_VULKAN_CORE_HEADER_DIRECTORY}")
 MESSAGE("[easy-vulkan-test] core library path : ${EASY_VULKAN_CORE_LIBRARY_DIRECTORY}")
 
@@ -32,7 +32,3 @@ FOREACH(F IN LISTS EASY_VULKAN_TEST_FILES)
     target_include_directories(${BASE_NAME} PUBLIC ${EASY_VULKAN_CORE_HEADER_DIRECTORY})
     target_link_libraries(${BASE_NAME} easy-vulkan glfw)
 ENDFOREACH()
-
-
-
-
