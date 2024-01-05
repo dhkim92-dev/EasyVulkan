@@ -5,7 +5,7 @@
 
 using namespace EasyVulkan::Info;
 
-DeviceCreateInfo* DeviceCreateInfo::enabled_extensions(vector<char *> values) {
+DeviceCreateInfo* DeviceCreateInfo::enabled_extensions(vector<const char *> values) {
     std::copy(values.begin(), values.end(), back_inserter(_enabled_extensions));
 
     return this;

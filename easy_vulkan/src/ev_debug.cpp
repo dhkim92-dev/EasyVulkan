@@ -2,7 +2,10 @@
 #define __EV_DEBUG_CPP__
 
 #include <sstream>
+#include <iostream>
 #include "ev_debug.h"
+
+using namespace std;
 
 namespace EasyVulkan 
 {
@@ -21,13 +24,13 @@ namespace EasyVulkan
             stringstream ss;
             ss << "[" << callback_data->messageIdNumber << "][" << callback_data->pMessageIdName << "] : " << callback_data->pMessage;
             if(severity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT) {
-                LOGV("[Vulkan Validation] : %s", ss.str().c_str());
+                cout << "[VERBOSE - VK] : " << ss.str() << "\n";
             }else if(severity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT) {
-                LOGI("[Vulkan Validation] : %s", ss.str().c_str());
+                cout << "[INFO - VK] : " << ss.str() << "\n";
             }else if(severity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT) {
-                LOGW("[Vulkan Validation] : %s", ss.str().c_str());
+                cout << "[WARNING - VK] : " << ss.str() << "\n";
             }else if(severity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT) {
-                LOGE("[Vulkan Validation] : %s", ss.str().c_str());
+                cerr << "[ERROR - VK] : " << ss.str() << "\n";
             }
 
             return VK_FALSE;

@@ -19,17 +19,17 @@ namespace EasyVulkan {
      * @brief Vulkan Instance Wrapper
     */
     class Instance {
-        vector<char *> _extensions; /*! instance extensions that want to be enabled */
+        vector<const char *> _extensions; /*! instance extensions that want to be enabled */
 
-        vector<char *> _validation_layers; /*! validation layers that want to be enabled*/
+        vector<const char *> _validation_layers; /*! validation layers that want to be enabled*/
 
         VkInstance _instance = VK_NULL_HANDLE; /*! VkInstance */
 
         bool _debug = false;
 
-        void setup_extensions(vector<char *> &requests);
+        void setup_extensions(vector<const char *> &requests);
 
-        void setup_validation_layers(vector<char *> &requests);
+        void setup_validation_layers(vector<const char *> &requests);
 
         public:
         
@@ -37,7 +37,7 @@ namespace EasyVulkan {
         * @brief constructor of Instance
         * @details EasyVulkan Instance Constructor. It should be include VkInstanceExtensions and Validation Layers that want to enable.
         */
-        explicit Instance(vector<char *>, vector<char *> validation_layers);
+        explicit Instance(vector<const char *>, vector<const char *> validation_layers);
 
         ~Instance();
 
@@ -51,12 +51,12 @@ namespace EasyVulkan {
         /**
          * @brief getter of Instance Extension names list
         */
-        vector<char *> extensions();
+        vector<const char *> extensions();
 
         /**
          * @brief getter of Vulkan Validation layers name list
         */
-        vector<char *> validation_layers();
+        vector<const char *> validation_layers();
 
         /**
          * @brief setter of Vulkan validation layer enabled or disabled

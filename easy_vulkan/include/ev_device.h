@@ -58,7 +58,7 @@ namespace EasyVulkan {
 
         ~Device();
 
-        void create_logical_device(VkPhysicalDeviceFeatures enabled_features, vector<char *> enabled_extensions, VkQueueFlags queue_types = VK_QUEUE_GRAPHICS_BIT, void *next = nullptr, bool use_swapchain = false);
+        void create_logical_device(VkPhysicalDeviceFeatures enabled_features, vector<const char *> enabled_extensions, VkQueueFlags queue_types = VK_QUEUE_GRAPHICS_BIT, void *next = nullptr, bool use_swapchain = true);
 
         VkPhysicalDevice physical_device();
 

@@ -12,12 +12,9 @@
 using namespace std;
 using namespace EasyVulkan;
 
-Instance::Instance(vector<char *> extensions, vector<char *> validation_layers) {
+Instance::Instance(vector<const char *> extensions, vector<const char *> validation_layers) {
     setup_extensions(extensions);
-
-#ifndef NDEBUG
     setup_validation_layers(validation_layers);
-#endif
 
     LOGI("Applied extensions size : %lu", _extensions.size());
     for(auto s : _extensions) {
@@ -42,7 +39,7 @@ Instance::~Instance() {
     _instance = VK_NULL_HANDLE;
 }
 
-void Instance::setup_extensions(vector<char *> &requests) {
+void Instance::setup_extensions(vector<const char *> &requests) {
     vector<VkExtensionProperties> properties = Utility::enumerate_instance_extensions();
 
 #ifdef __APPLE__
@@ -65,7 +62,7 @@ void Instance::setup_extensions(vector<char *> &requests) {
     }
 }
 
-void Instance::setup_validation_layers(vector<char *> &requests) {
+void Instance::setup_validation_layers(vector<const char *> &requests) {
     vector<VkLayerProperties> properties = Utility::enumerate_instance_layers();
 
     for(auto &request : requests) {
@@ -79,7 +76,7 @@ void Instance::setup_validation_layers(vector<char *> &requests) {
         }
 
         if(!found) {
-            LOGI("Instance Layer %s not supported.");
+            LOGI("Instance Layer %s not supported.", request);
         }
     }
 
@@ -91,7 +88,7 @@ void Instance::create(Info::ApplicationInfo *app_info, VkInstanceCreateFlags fla
 #ifdef __APPLE__
     flags |= VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
 #endif
-    char *validation_layer_name = "VK_LAYER_KHRONOS_validation";
+    const char *validation_layer_name = "VK_LAYER_KHRONOS_validation";
 
     if(_debug) {
         _extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
@@ -117,7 +114,6 @@ void Instance::create(Info::ApplicationInfo *app_info, VkInstanceCreateFlags fla
         ->device_extensions(_extensions)
         ->flags(flags);
     
-    LOGD("builder flags : %d\n", flags)
     VkInstanceCreateInfo info = builder->build();
 
     LOGD("[Instance::create] VkInstanceCreateInfo applicationInfo.appName : %s", info.pApplicationInfo->pApplicationName);
@@ -147,11 +143,11 @@ VkInstance Instance::instance() {
     return _instance;
 }
 
-vector<char *> Instance::extensions() {
+vector<const char *> Instance::extensions() {
     return _extensions;
 }
 
-vector<char *> Instance::validation_layers() {
+vector<const char *> Instance::validation_layers() {
     return _validation_layers;
 }
 

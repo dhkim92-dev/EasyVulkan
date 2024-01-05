@@ -8,3 +8,4 @@ SET(CMAKE_VERBOSE_MAKEFILE true)
 
 add_subdirectory(easy_vulkan)
 add_subdirectory(test)
+add_subdirectory(externals/glfw glfw)

@@ -4,6 +4,7 @@
 #include "ev_instance.h"
 #include "ev_device.h"
 #include "ev_utility.h"
+#include "ev_swapchain.h"
 #include "builder/ev_builder.h"
 
 #endif
