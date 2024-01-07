@@ -4,10 +4,11 @@
 #include <vulkan/vulkan.h>
 #include <vector>
 #include <string>
-#include "builder/ev_instance_ci.h"
+#include "initializer/ev_instance_ci.h"
 #include "ev_utility.h"
 
 using namespace std;
+using namespace EasyVulkan::Initializer;
 
 /**
  * @namespace EasyVulkan namespace
@@ -41,7 +42,7 @@ namespace EasyVulkan {
 
         ~Instance();
 
-        void create(Info::ApplicationInfo *app_info, VkInstanceCreateFlags flags = VK_FLAGS_NONE);
+        void create(ApplicationInfo *app_info, VkInstanceCreateFlags flags = VK_FLAGS_NONE);
 
         /**
          * @brief VkInstance getter

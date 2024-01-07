@@ -30,7 +30,7 @@ Instance* create_instance()
 
     Instance *instance = new Instance(instance_extensions, validation_layers);
     instance->set_debug(true);
-    EasyVulkan::Info::ApplicationInfo* app_info = new EasyVulkan::Info::ApplicationInfo();
+    Initializer::ApplicationInfo* app_info = new Initializer::ApplicationInfo();
     app_info->api_version(VK_API_VERSION_1_3)
     ->app_name("easy-vulkan-test")
     ->engine_name("easy-vulkan-test")

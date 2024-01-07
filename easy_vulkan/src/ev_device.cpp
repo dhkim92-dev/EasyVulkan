@@ -93,12 +93,12 @@ void Device::create_logical_device(
         return ;
     }
 
-    vector<Info::QueueCreateInfo*> queue_create_infos;
-    Info::DeviceCreateInfo* device_ci = new Info::DeviceCreateInfo();
+    vector<QueueCreateInfo*> queue_create_infos;
+    DeviceCreateInfo* device_ci = new DeviceCreateInfo();
 
     if(queue_types & VK_QUEUE_GRAPHICS_BIT) {
         _queue_family_indices.graphics = get_queue_family_index(VK_QUEUE_GRAPHICS_BIT);
-        auto *ci = new Info::QueueCreateInfo();
+        auto *ci = new QueueCreateInfo();
         ci = ci->queue_count(1)
         ->queue_priorities(1.0f)
         ->queue_index(_queue_family_indices.graphics);
@@ -109,7 +109,7 @@ void Device::create_logical_device(
 
     if(queue_types & VK_QUEUE_COMPUTE_BIT) {
         _queue_family_indices.compute = get_queue_family_index(VK_QUEUE_COMPUTE_BIT);
-        auto *ci = new Info::QueueCreateInfo();
+        auto *ci = new QueueCreateInfo();
         ci = ci->queue_count(1)
         ->queue_index(_queue_family_indices.compute);
         queue_create_infos.push_back(ci);
@@ -119,7 +119,7 @@ void Device::create_logical_device(
 
     if(queue_types & VK_QUEUE_TRANSFER_BIT) {
         _queue_family_indices.transfer = get_queue_family_index(VK_QUEUE_TRANSFER_BIT);
-        auto *ci = new Info::QueueCreateInfo();
+        auto *ci = new QueueCreateInfo();
         ci = ci->queue_count(1)
         ->queue_index(_queue_family_indices.transfer);
         queue_create_infos.push_back(ci);
@@ -227,6 +227,28 @@ VkFormat Device::get_supported_depth_format(bool check_sampling) {
     }
 
     throw runtime_error("Could not find a suitable depth format.");
+}
+
+uint32_t Device::get_memory_type(uint32_t type_bits, VkMemoryPropertyFlags properties, VkBool32 *found) const {
+    for(uint32_t i = 0 ; i < _memory_properties.memoryTypeCount ; i++, type_bits>>=1) {
+        if((type_bits & 1) != 1) continue;
+        if((_memory_properties.memoryTypes[i].propertyFlags & properties) == properties) {
+            if(found) {
+                *found = VK_TRUE;
+            }
+
+            return i;
+        }
+    }
+
+    if(found) {
+        *found = VK_FALSE;
+
+        return 0;
+    } else {
+        LOGE("Not supported memory type.");
+        throw runtime_error("Could not found a matching memory type.");
+    }
 }
 
 #endif

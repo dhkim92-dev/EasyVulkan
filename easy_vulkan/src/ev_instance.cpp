@@ -11,6 +11,7 @@
 
 using namespace std;
 using namespace EasyVulkan;
+using namespace EasyVulkan::Initializer;
 
 Instance::Instance(vector<const char *> extensions, vector<const char *> validation_layers) {
     setup_extensions(extensions);
@@ -83,8 +84,8 @@ void Instance::setup_validation_layers(vector<const char *> &requests) {
     
 }
 
-void Instance::create(Info::ApplicationInfo *app_info, VkInstanceCreateFlags flags) {
-    auto builder = new Info::InstanceCreateInfo();
+void Instance::create(ApplicationInfo *app_info, VkInstanceCreateFlags flags) {
+    auto builder = new InstanceCreateInfo();
 #ifdef __APPLE__
     flags |= VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
 #endif

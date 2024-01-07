@@ -18,8 +18,6 @@ Swapchain::~Swapchain() {
 }
 
 /*--------- Private Methods ----------*/
-
-
 void Swapchain::setup_present_queue() {
     uint32_t queue_count = 0;
     auto queue_family_properties = _device->queue_family_properties();

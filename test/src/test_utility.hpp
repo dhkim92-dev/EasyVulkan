@@ -5,6 +5,7 @@
 #include <vector>
 #include <cassert>
 #include <string>
+#include <gtest/gtest.h>
 #include "easy_vulkan.h"
 
 #ifndef GLFW_INCLUDE_VULKAN
@@ -14,6 +15,8 @@
 
 using namespace std;
 using namespace EasyVulkan;
+using namespace EasyVulkan::Initializer;
+using namespace EasyVulkan::Factory;
 
 Instance* create_ev_instance() 
 {
@@ -36,7 +39,7 @@ Instance* create_ev_instance()
 
     Instance *instance = new Instance(instance_extensions, validation_layers);
     instance->set_debug(true);
-    EasyVulkan::Info::ApplicationInfo* app_info = new EasyVulkan::Info::ApplicationInfo();
+    ApplicationInfo* app_info = new ApplicationInfo();
     app_info->api_version(VK_API_VERSION_1_3)
     ->app_name("easy-vulkan-test")
     ->engine_name("easy-vulkan-test")
@@ -78,7 +81,7 @@ Instance* create_instance_with_surface(GLFWwindow *window, VkSurfaceKHR *surface
     Instance *instance = new Instance(instance_extensions, validation_layers);
     cout << "instance id : " << instance << endl;
     instance->set_debug(true);
-    EasyVulkan::Info::ApplicationInfo* app_info = new EasyVulkan::Info::ApplicationInfo();
+    ApplicationInfo* app_info = new ApplicationInfo();
     app_info->api_version(VK_API_VERSION_1_3)
     ->app_name("easy-vulkan-test")
     ->engine_name("easy-vulkan-test")
@@ -105,6 +108,20 @@ GLFWwindow* create_glfw_window() {
 
     return window;
 }
+
+
+#define NONE_SURFACE_TEST_MAIN()  \
+int main(int argc, char *argv[])    \
+{   \
+    instance = create_ev_instance();    \
+    device = create_ev_device(instance, {}, 0); \
+    testing::InitGoogleTest(&argc, argv);   \
+    int ret = RUN_ALL_TESTS();              \
+    delete device;                          \
+    delete instance;                        \      
+    return ret;                             \
+}   
+
 
 
 #endif
