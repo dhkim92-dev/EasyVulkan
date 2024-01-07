@@ -45,6 +45,8 @@ void Instance::setup_extensions(vector<const char *> &requests) {
 
 #ifdef __APPLE__
     _extensions.push_back("VK_KHR_portability_enumeration");
+    _extensions.push_back(VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME);
+    _extensions.push_back(VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
 #endif 
 
     for(auto request : requests) {

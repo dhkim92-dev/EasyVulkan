@@ -2,6 +2,7 @@
 #define __EV_PHYSICAL_DEVICE_H__
 
 #include <vulkan/vulkan.h>
+#include <vulkan/vulkan_beta.h>
 #include <vector>
 #include <stdexcept>
 #include <string>
