@@ -21,8 +21,10 @@ TEST(EV_BUFFER_TEST, BUFFR_COPY_AND_DUMP_TEST) {
     EasyVulkan::Buffer *buffer1 = nullptr;
     EasyVulkan::Buffer *buffer2 = nullptr;
 
-    buffer1 = buffer_factory.create_buffer(VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, 4);
-    buffer2 = buffer_factory.create_buffer(VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, 4);
+    buffer1 = buffer_factory.create_buffer(
+        VK_BUFFER_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, 4);
+    buffer2 = buffer_factory.create_buffer(
+        VK_BUFFER_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, 4);
 
     LOGI("buffer1 size : %ld, alignment : %ld\n", buffer1->size(), buffer1->alignment());
     LOGI("buffer2 size : %ld, alignment : %ld\n", buffer2->size(), buffer2->alignment());
@@ -45,24 +47,23 @@ TEST(EV_BUFFER_TEST, BUFFR_COPY_AND_DUMP_TEST) {
     float data2 = 0.9f;
 
     buffer1->map(0, 4);
-    buffer2->map(0, 4);
     buffer1->copy(&data1, 4);
-    buffer2->copy(&data2, 4);
     buffer1->unmap();
+    buffer2->map(0, 4);
+    buffer2->copy(&data2, 4);
     buffer2->unmap();
-    LOGI("copy complete\n");
+
+    float dump1, dump2;
 
     buffer1->map(0, 4);
-    buffer2->map(0, 4);
-    float dump1, dump2;
     buffer1->dump(&dump1, 4);
-    buffer2->dump(&dump2, 4);
-
     buffer1->unmap();
+    buffer2->map(0, 4);
+    buffer2->dump(&dump2, 4);
     buffer2->unmap();
 
-    LOGI("Buffer1 return value : %f", dump1);
-    LOGI("Buffer2 return value : %f", dump2);
+    EXPECT_EQ(dump1, data1);
+    EXPECT_EQ(dump2, data2);
     
     if(buffer1) {
         delete buffer1;

@@ -142,7 +142,8 @@ void Device::create_logical_device(
         device_ci->next(&physical_device_features2);
     }
 
-#if defined(VK_USE_PLATFORM_IOS_MVK) || defined(VK_USE_PLATFORM_MACOS_MVK) || defined(VK_KHR_portability_subset)
+#if defined(__APPLE__) && defined(VK_KHR_portability_subset)
+    LOGI("Device extension : %s is added.", VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME);
     if(is_support_extension(VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME)) {
         device_extensions.push_back(VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME);
     }

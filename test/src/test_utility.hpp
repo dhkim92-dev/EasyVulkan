@@ -33,7 +33,6 @@ Instance* create_ev_instance()
     };
 
     vector<const char *> validation_layers = {
-        "VK_LAYER_KHRONOS_validation",
         "VK_LAYER_KHRONOS_profiles"
     };
 
@@ -72,7 +71,6 @@ Instance* create_instance_with_surface(GLFWwindow *window, VkSurfaceKHR *surface
     vector<const char*> instance_extensions(extensions, extensions + count);
     vector<const char*> validation_layers = {
         "VK_LAYER_KHRONOS_validation",
-        "VK_LAYER_KHRONOS_profiles"
     };
 
     for(auto name : instance_extensions) {
@@ -89,7 +87,9 @@ Instance* create_instance_with_surface(GLFWwindow *window, VkSurfaceKHR *surface
     ->engine_version(VK_MAKE_VERSION(1, 0, 0));
 
     instance->create(app_info);
+    LOGI("Instance created.");
     CHECK_VK_RESULT(glfwCreateWindowSurface(instance->instance(), window, nullptr, surface));
+    LOGI("Surface created.");
     delete app_info;
     return instance;
 }

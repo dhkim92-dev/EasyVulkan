@@ -12,7 +12,7 @@ GLFWwindow *window = nullptr;
 VkSurfaceKHR surface = VK_NULL_HANDLE;
 
 TEST(EasyVulkanSwapchainTest, create_swapchain) {
-    Device *device = new Device(instance, 1);
+    Device *device = new Device(instance, 0);
     VkPhysicalDeviceFeatures features{};
     device->create_logical_device(features, {}, VK_QUEUE_GRAPHICS_BIT, nullptr, true);
     EXPECT_NE(device, nullptr);
@@ -33,12 +33,13 @@ int main(int argc, char *argv[])
     glfwInit();
     window = create_glfw_window();
     instance = create_instance_with_surface(window, &surface);
+    LOGI("surface not created.");
     assert(surface != VK_NULL_HANDLE);
     testing::InitGoogleTest(&argc, argv);
-
     int ret = RUN_ALL_TESTS();
     glfwDestroyWindow(window);
     glfwTerminate();
+    delete instance;
     return ret;
 }
 
