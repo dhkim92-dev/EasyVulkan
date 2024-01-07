@@ -77,6 +77,8 @@ namespace EasyVulkan {
         vector<string> supported_extensions();
 
         VkFormat get_supported_depth_format(bool check_sampling);
+
+        uint32_t get_memory_type(uint32_t type_bits, VkMemoryPropertyFlags properties, VkBool32 *found) const;
     };
 }
 
