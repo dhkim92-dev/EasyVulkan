@@ -5,12 +5,12 @@
 #include <vector>
 #include <algorithm>
 #include "ev_utility.h"
-#include "builder/ev_queue_ci.h"
+#include "initializer/ev_queue_ci.h"
 
 using namespace std;
 
 namespace EasyVulkan{
-    namespace Info {
+    namespace Initializer {
         class DeviceCreateInfo {
 
             // VkDeviceCreateFlags _flags = VK_FLAGS_NONE;

@@ -1,6 +1,7 @@
 #ifndef __EV_BUFFER_CPP__
 #define __EV_BUFFER_CPP__
 
+#include <memory.h>
 #include "ev_buffer.h"
 
 using namespace EasyVulkan;
@@ -10,7 +11,7 @@ Buffer::Buffer(Device *device) {
     _device = device;
 }
 
-Buffer::Buffer(Device *device, Builder::BufferCreateInfo* buffer_ci) {
+Buffer::Buffer(Device *device, BufferCreateInfo* buffer_ci) {
     _device = device;
     create_buffer(buffer_ci);
 }
@@ -20,7 +21,7 @@ Buffer::~Buffer() {
 }
 
 // Public Methods
-VkResult Buffer::create_buffer(Builder::BufferCreateInfo* buffer_ci) {
+VkResult Buffer::create_buffer(BufferCreateInfo* buffer_ci) {
     auto ci = buffer_ci->build();
     auto ret = vkCreateBuffer(_device->device(), &ci, nullptr, &_buffer);
 
@@ -34,17 +35,31 @@ VkResult Buffer::create_buffer(Builder::BufferCreateInfo* buffer_ci) {
     return ret;
 }
 
-void Buffer::copy_to(void *data, VkDeviceSize size) {
-    
+/**
+ * @brief copy data to buffer memory
+*/
+void Buffer::copy(void *src, VkDeviceSize size) {
+    assert(mapped);
+    if(mapped == nullptr) {
+        LOGE("Need memory mapping before copy.");
+        return ;
+    }
+    memcpy(mapped, src, size);
 }
 
-void Buffer::copy_from(void *data, VkDeviceSize size) {
-
+/**
+ * @brief copy data from buffer to host memory
+*/
+void Buffer::dump(void *dst, VkDeviceSize size) {
+    assert(mapped);
+    assert(dst);
+    memcpy(dst, mapped, size);
 }
+
 
 VkResult Buffer::map(VkDeviceSize offset, VkDeviceSize size) {
     assert(_memory != nullptr);
-    return vkMapMemory(_device->device(), _memory->memory(), offset, size, 0, &mapped);
+    return vkMapMemory(_device->device(), _memory->memory(), _offset + offset, size, 0, &mapped);
 }
 
 void Buffer::unmap() {
@@ -57,6 +72,7 @@ void Buffer::unmap() {
 
 VkResult Buffer::bind(Memory *memory, VkDeviceSize offset) {
     assert(memory != nullptr);
+    _offset = offset;
     _memory = memory;
     vkBindBufferMemory(_device->device(), _buffer, _memory->memory(), offset);
 }

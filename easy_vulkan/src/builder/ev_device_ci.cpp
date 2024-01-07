@@ -1,9 +1,9 @@
 #ifndef __EV_DEVICE_CI_CPP__
 #define __EV_DEVICE_CI_CPP__
 
-#include "builder/ev_device_ci.h"
+#include "initializer/ev_device_ci.h"
 
-using namespace EasyVulkan::Info;
+using namespace EasyVulkan::Initializer;
 
 DeviceCreateInfo* DeviceCreateInfo::enabled_extensions(vector<const char *> values) {
     std::copy(values.begin(), values.end(), back_inserter(_enabled_extensions));

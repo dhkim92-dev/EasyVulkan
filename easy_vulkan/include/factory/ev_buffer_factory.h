@@ -3,7 +3,7 @@
 
 #include <vulkan/vulkan.h>
 #include <cassert>
-#include "builder/ev_buffer_ci.h"
+#include "initializer/ev_buffer_ci.h"
 #include "ev_buffer.h"
 
 namespace EasyVulkan {

@@ -7,12 +7,13 @@
 #include <string>
 #include <cassert>
 #include <algorithm>
-#include "builder/ev_queue_ci.h"
-#include "builder/ev_device_ci.h"
+#include "initializer/ev_queue_ci.h"
+#include "initializer/ev_device_ci.h"
 #include "ev_instance.h"
 #include "ev_utility.h"
 
 using namespace std;
+using namespace EasyVulkan::Initializer;
 
 namespace EasyVulkan {
 

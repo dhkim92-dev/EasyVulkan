@@ -1,9 +1,9 @@
 #ifndef __EV_QUEUE_CI_CPP__
 #define __EV_QUEUE_CI_CPP__
 
-#include "builder/ev_queue_ci.h"
+#include "initializer/ev_queue_ci.h"
 
-using namespace EasyVulkan::Info;
+using namespace EasyVulkan::Initializer;
 
 QueueCreateInfo* QueueCreateInfo::queue_priorities(float value) {
     _priorities = value;

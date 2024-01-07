@@ -2,9 +2,11 @@
 #define __EV_MEMORY_H__
 
 #include <vulkan/vulkan.h>
-#include "builder/ev_memory_ai.h"
+#include "initializer/ev_memory_ai.h"
 #include "ev_device.h"
 #include "ev_utility.h"
+
+using namespace EasyVulkan::Initializer;
 
 namespace EasyVulkan 
 {
@@ -29,7 +31,7 @@ namespace EasyVulkan
 
         void release();
 
-        VkResult allocate(Builder::MemoryAllocateInfo *info);
+        VkResult allocate(MemoryAllocateInfo *info);
 
         Device* device();
 

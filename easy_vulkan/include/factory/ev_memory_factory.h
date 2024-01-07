@@ -6,10 +6,9 @@
 #include "ev_buffer.h"
 #include "ev_device.h"
 #include "ev_memory.h"
-#include "builder/ev_memory_ai.h"
+#include "initializer/ev_memory_ai.h"
 
 namespace EasyVulkan {
-
     namespace Factory {
 
         class MemoryFactory {

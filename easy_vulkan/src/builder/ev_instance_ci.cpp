@@ -1,9 +1,9 @@
 #ifndef __EV_INSTANCE_CI_CPP__
 #define __EV_INSTANCE_CI_CPP__
 
-#include "builder/ev_instance_ci.h"
+#include "initializer/ev_instance_ci.h"
 
-using namespace EasyVulkan::Info;
+using namespace EasyVulkan::Initializer;
 
 ApplicationInfo* ApplicationInfo::api_version(uint32_t value) {
     _api_version = value;

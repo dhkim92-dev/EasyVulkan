@@ -2,10 +2,12 @@
 #define __EV_BUFFER_H__
 
 #include <vulkan/vulkan.h>
-#include "builder/ev_buffer_ci.h"
+#include "initializer/ev_buffer_ci.h"
 #include "ev_memory.h"
 #include "ev_device.h"
 #include "ev_utility.h"
+
+using namespace EasyVulkan::Initializer;
 
 namespace EasyVulkan {
 
@@ -32,15 +34,15 @@ namespace EasyVulkan {
 
         explicit Buffer(Device *device);
 
-        explicit Buffer(Device *device, Builder::BufferCreateInfo* buffer_ci);
+        explicit Buffer(Device *device, BufferCreateInfo* buffer_ci);
 
         ~Buffer();
 
-        VkResult create_buffer(Builder::BufferCreateInfo* buffer_ci);
+        VkResult create_buffer(BufferCreateInfo* buffer_ci);
 
-        void copy_to(void *data, VkDeviceSize size); 
+        void copy(void *src, VkDeviceSize size); 
 
-        void copy_from(void *data, VkDeviceSize size);
+        void dump(void *dst, VkDeviceSize size);
 
         VkResult map(VkDeviceSize offset = 0, VkDeviceSize size = VK_WHOLE_SIZE);
 

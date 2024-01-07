@@ -8,7 +8,7 @@
 using namespace std;
 
 namespace EasyVulkan {
-    namespace Info {
+    namespace Initializer {
         /**
          * @brief VkApplicationInfo Builder class
         */

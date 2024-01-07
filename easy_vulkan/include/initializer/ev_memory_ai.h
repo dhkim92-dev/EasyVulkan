@@ -7,7 +7,7 @@
 using namespace std;
 
 namespace EasyVulkan {
-    namespace Builder {
+    namespace Initializer {
 
         class MemoryAllocateInfo {
             

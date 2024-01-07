@@ -6,7 +6,7 @@
 #include "ev_utility.h"
 
 namespace EasyVulkan {
-    namespace Builder {
+    namespace Initializer {
 
         class BufferCreateInfo {
 
@@ -37,6 +37,8 @@ namespace EasyVulkan {
             BufferCreateInfo* usage(VkBufferUsageFlags value);
 
             BufferCreateInfo* sharing_mode(VkSharingMode value);
+
+            BufferCreateInfo* size(VkDeviceSize value);
 
             VkBufferCreateInfo build();
         };
