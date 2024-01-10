@@ -109,6 +109,19 @@ GLFWwindow* create_glfw_window() {
     return window;
 }
 
+#define INIT_SURFACE_TEST_MAIN()  \
+int main(int argc, char *argv[])    \
+{   \
+    instance = create_ev_instance();    \
+    device = create_ev_device(instance, {}, 0); \
+    init_test();                            \
+    testing::InitGoogleTest(&argc, argv);   \
+    int ret = RUN_ALL_TESTS();              \
+    delete device;                          \
+    delete instance;                        \
+    return ret;                             \
+}   
+
 
 #define NONE_SURFACE_TEST_MAIN()  \
 int main(int argc, char *argv[])    \
@@ -118,7 +131,21 @@ int main(int argc, char *argv[])    \
     testing::InitGoogleTest(&argc, argv);   \
     int ret = RUN_ALL_TESTS();              \
     delete device;                          \
-    delete instance;                        \      
+    delete instance;                        \
+    return ret;                             \
+}   
+
+#define COMMAND_POOL_TEST_MAIN()  \
+int main(int argc, char *argv[])    \
+{   \
+    instance = create_ev_instance();    \
+    device = create_ev_device(instance, {}, 0); \
+    command_pool = new CommandPool(device, VK_QUEUE_GRAPHICS_BIT | VK_QUEUE_COMPUTE_BIT);   \
+    testing::InitGoogleTest(&argc, argv);   \
+    int ret = RUN_ALL_TESTS();              \
+    delete command_pool;                    \
+    delete device;                          \
+    delete instance;                        \
     return ret;                             \
 }   
 

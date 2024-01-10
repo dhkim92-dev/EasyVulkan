@@ -7,15 +7,14 @@ using namespace EasyVulkan;
 using namespace EasyVulkan::Initializer;
 using namespace EasyVulkan::Factory;
 
-MemoryFactory::MemoryFactory(Device *_device) : device(_device) {
-    assert(_device != nullptr);
+MemoryFactory::MemoryFactory(Device *device) : DeviceBase(device) {
 }
 
 Memory* MemoryFactory::create_buffer_memory(Buffer *buffer, VkMemoryPropertyFlags flags, VkDeviceSize size) {
     assert(buffer != nullptr);
     auto requirements = buffer->memory_requirements();
     VkBool32 found = VK_FALSE;
-    uint32_t memory_type_index = device->get_memory_type(requirements.memoryTypeBits, flags, &found);
+    uint32_t memory_type_index = _device->get_memory_type(requirements.memoryTypeBits, flags, &found);
 
     VkMemoryAllocateFlagsInfoKHR alloc_flags_info{};
     auto memory_ai = MemoryAllocateInfo();
@@ -29,7 +28,7 @@ Memory* MemoryFactory::create_buffer_memory(Buffer *buffer, VkMemoryPropertyFlag
         memory_ai.next(&alloc_flags_info);           
     }
     
-    Memory *memory = new Memory(device);
+    Memory *memory = new Memory(_device);
     memory->allocate(&memory_ai);
 
     return memory;

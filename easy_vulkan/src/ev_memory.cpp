@@ -7,7 +7,7 @@
 
 using namespace EasyVulkan;
     
-Memory::Memory(Device *device) : _device(device) {
+Memory::Memory(Device *device) : DeviceBase(device) {
     
 }
 

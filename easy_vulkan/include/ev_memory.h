@@ -2,6 +2,7 @@
 #define __EV_MEMORY_H__
 
 #include <vulkan/vulkan.h>
+#include "base/ev_device_base.h"
 #include "initializer/ev_memory_ai.h"
 #include "ev_device.h"
 #include "ev_utility.h"
@@ -11,10 +12,8 @@ using namespace EasyVulkan::Initializer;
 namespace EasyVulkan 
 {
 
-    class Memory {
+    class Memory : DeviceBase {
         
-        Device *_device = nullptr;
-
         VkDeviceMemory _memory = VK_NULL_HANDLE;
 
         VkDeviceSize _size = 0 ;

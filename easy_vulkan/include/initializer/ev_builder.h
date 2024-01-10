@@ -5,5 +5,6 @@
 #include "ev_instance_ci.h"
 #include "ev_queue_ci.h"
 #include "ev_memory_ai.h"
+#include "ev_queue_si.h"
 
 #endif

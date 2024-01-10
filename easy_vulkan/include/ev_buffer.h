@@ -2,6 +2,7 @@
 #define __EV_BUFFER_H__
 
 #include <vulkan/vulkan.h>
+#include "base/ev_device_base.h"
 #include "initializer/ev_buffer_ci.h"
 #include "ev_memory.h"
 #include "ev_device.h"
@@ -11,8 +12,7 @@ using namespace EasyVulkan::Initializer;
 
 namespace EasyVulkan {
 
-    class Buffer {
-        Device *_device = nullptr;
+    class Buffer : DeviceBase {
 
         VkBuffer _buffer = VK_NULL_HANDLE;
 
@@ -59,6 +59,10 @@ namespace EasyVulkan {
         //getter
 
         VkBuffer buffer();
+
+        VkBuffer& buffer_alias();
+
+        VkBuffer* buffer_ptr();
 
         Memory *memory();
 
