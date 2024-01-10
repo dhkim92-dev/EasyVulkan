@@ -51,10 +51,7 @@ namespace EasyVulkan {
 
         bool is_support_extension(const string extension_name);
 
-        uint32_t get_queue_family_index(VkQueueFlags flags) const;
-
         public :
-
         
         explicit Device(Instance *_instance, uint32_t gpu_id = 0);
 
@@ -81,6 +78,8 @@ namespace EasyVulkan {
         VkFormat get_supported_depth_format(bool check_sampling);
 
         uint32_t get_memory_type(uint32_t type_bits, VkMemoryPropertyFlags properties, VkBool32 *found) const;
+
+        uint32_t get_queue_family_index(VkQueueFlags flags) const;
     };
 }
 

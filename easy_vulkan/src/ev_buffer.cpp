@@ -7,12 +7,10 @@
 using namespace EasyVulkan;
 
 // Constructor & Destructor
-Buffer::Buffer(Device *device) {
-    _device = device;
+Buffer::Buffer(Device *device) : DeviceBase(device) {
 }
 
-Buffer::Buffer(Device *device, BufferCreateInfo* buffer_ci) {
-    _device = device;
+Buffer::Buffer(Device *device, BufferCreateInfo* buffer_ci) : DeviceBase(device) {
     create_buffer(buffer_ci);
 }
 
@@ -109,6 +107,14 @@ void Buffer::destroy() {
 
 VkBuffer Buffer::buffer() {
     return _buffer;
+}
+
+VkBuffer& Buffer::buffer_alias() {
+    return _buffer;
+}
+
+VkBuffer* Buffer::buffer_ptr() {
+    return &_buffer;
 }
 
 Memory* Buffer::memory() {
