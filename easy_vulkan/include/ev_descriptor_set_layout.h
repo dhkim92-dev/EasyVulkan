@@ -4,13 +4,13 @@
 #include <vulkan/vulkan.h>
 #include <unordered_map>
 #include <vector>
-#include "base/ev_device_base.h"
+#include "ev_device.h"
 
 using namespace std;
 
 namespace EasyVulkan {
 
-    class DescriptorSetLayout : DeviceBase {
+    class DescriptorSetLayout : public DeviceBase {
         
         VkDescriptorSetLayout _layout = VK_NULL_HANDLE;
 

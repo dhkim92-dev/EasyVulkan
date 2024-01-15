@@ -2,7 +2,6 @@
 #define __EV_MEMORY_H__
 
 #include <vulkan/vulkan.h>
-#include "base/ev_device_base.h"
 #include "initializer/ev_memory_ai.h"
 #include "ev_device.h"
 #include "ev_utility.h"

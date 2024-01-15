@@ -5,13 +5,12 @@
 #include "ev_device.h"
 #include "ev_descriptor_set_layout.h"
 #include "ev_descriptor_pool.h"
-#include "base/ev_device_base.h"
 
 using namespace std;
 
 namespace EasyVulkan {
 
-    class DescriptorSet : DeviceBase {
+    class DescriptorSet : public DeviceBase {
 
         VkDescriptorSet _descriptor_set = VK_NULL_HANDLE;
 

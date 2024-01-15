@@ -2,7 +2,7 @@
 #define __EV_FENCE_H__
 
 #include <vulkan/vulkan.h>
-#include "base/ev_device_base.h"
+#include "ev_device.h"
 
 namespace EasyVulkan {
     class Fence : DeviceBase {

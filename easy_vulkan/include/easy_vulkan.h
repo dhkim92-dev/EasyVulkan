@@ -23,7 +23,4 @@
 /*-- factories --*/
 #include "factory/ev_factory.h"
 
-/*-- base --*/
-#include "base/ev_base.h"
-
 #endif

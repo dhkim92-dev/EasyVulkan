@@ -6,7 +6,6 @@
 #include "ev_buffer.h"
 #include "ev_device.h"
 #include "ev_memory.h"
-#include "base/ev_device_base.h"
 #include "initializer/ev_memory_ai.h"
 
 namespace EasyVulkan {
