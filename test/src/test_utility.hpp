@@ -135,7 +135,7 @@ int main(int argc, char *argv[])    \
     return ret;                             \
 }   
 
-#define COMMAND_POOL_TEST_MAIN()  \
+#define DEFAULT_TEST_MAIN()  \
 int main(int argc, char *argv[])    \
 {   \
     instance = create_ev_instance();    \

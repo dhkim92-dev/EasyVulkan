@@ -34,4 +34,22 @@ Memory* MemoryFactory::create_buffer_memory(Buffer *buffer, VkMemoryPropertyFlag
     return memory;
 }
 
+Memory* MemoryFactory::create_image_memory(Image *image, VkMemoryPropertyFlags flags) {
+    uint32_t memory_type_index = _device->get_memory_type(
+        image->memory_requirements().memoryTypeBits,
+        flags,
+        nullptr
+    );
+    auto memory_ai = MemoryAllocateInfo();
+    memory_ai.flags = flags;
+    memory_ai.size(image->memory_requirements().size)
+        ->memory_type_index(memory_type_index);
+
+    Memory* memory = new Memory(_device);
+    memory->allocate(&memory_ai);
+
+    return memory;
+}
+
+
 #endif
