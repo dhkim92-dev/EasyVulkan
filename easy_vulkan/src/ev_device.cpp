@@ -252,4 +252,13 @@ uint32_t Device::get_memory_type(uint32_t type_bits, VkMemoryPropertyFlags prope
     }
 }
 
+
+DeviceBase::DeviceBase(Device *device) : _device(device) {
+    assert(_device != nullptr);
+}
+
+Device* DeviceBase::device() {
+    return _device;
+}
+
 #endif

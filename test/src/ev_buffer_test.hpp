@@ -1,10 +1,6 @@
-#ifndef __EV_BUFFER_TEST_CPP__
-#define __EV_BUFFER_TEST_CPP__
+#ifndef __EV_BUFFER_TEST_HPP__
+#define __EV_BUFFER_TEST_HPP__
 
-#include <gtest/gtest.h>
-#include <vulkan/vulkan.h>
-#include "easy_vulkan.h"
-#include "ev_buffer.h"
 #include "test_utility.hpp"
 
 using namespace std;
@@ -12,8 +8,8 @@ using namespace EasyVulkan;
 using namespace EasyVulkan::Factory;
 using namespace EasyVulkan::Initializer;
 
-Instance *instance = nullptr;
-Device *device = nullptr;
+extern Instance *instance;
+extern Device *device;
 
 TEST(EV_BUFFER_TEST, BUFFR_COPY_AND_DUMP_TEST) {
     auto buffer_factory = BufferFactory(device);
@@ -128,7 +124,5 @@ TEST(EV_BUFFER_TEST, BUFFER_CREATE_TEST) {
     EXPECT_NE(buffer, nullptr);
     delete buffer;
 }
-
-NONE_SURFACE_TEST_MAIN()
 
 #endif

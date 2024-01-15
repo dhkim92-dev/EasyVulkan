@@ -8,6 +8,7 @@
 #include "ev_debug.h"
 #include "ev_swapchain.h"
 #include "ev_buffer.h"
+#include "ev_image.h"
 #include "ev_command_pool.h"
 #include "ev_command_buffer.h"
 #include "ev_queue.h"
@@ -18,12 +19,9 @@
 // #include "ev_pipeline.h"
 
 /*-- initializers --*/
-#include "initializer/ev_builder.h"
+#include "initializer/ev_initializer.h"
 
 /*-- factories --*/
 #include "factory/ev_factory.h"
-
-/*-- base --*/
-#include "base/ev_base.h"
 
 #endif

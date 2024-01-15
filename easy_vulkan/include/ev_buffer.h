@@ -2,10 +2,9 @@
 #define __EV_BUFFER_H__
 
 #include <vulkan/vulkan.h>
-#include "base/ev_device_base.h"
+#include "ev_device.h"
 #include "initializer/ev_buffer_ci.h"
 #include "ev_memory.h"
-#include "ev_device.h"
 #include "ev_utility.h"
 
 using namespace EasyVulkan::Initializer;

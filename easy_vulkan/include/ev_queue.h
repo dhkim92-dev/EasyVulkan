@@ -3,7 +3,6 @@
 
 #include <vulkan/vulkan.h>
 #include "initializer/ev_queue_si.h"
-#include "base/ev_device_base.h"
 #include "ev_device.h"
 #include "ev_fence.h"
 #include "ev_command_buffer.h"

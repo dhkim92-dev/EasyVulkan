@@ -22,13 +22,17 @@ ENDIF()
 
 LINK_LIBRARIES(vulkan gtest easy-vulkan)
 
-FILE(GLOB EASY_VULKAN_TEST_FILES src/*.cpp)
+FILE(GLOB EASY_VULKAN_TEST_HEADERS src/*.hpp)
 
-FOREACH(F IN LISTS EASY_VULKAN_TEST_FILES)
-    get_filename_component(FILE_NAME ${F} NAME)
-    get_filename_component(BASE_NAME ${F} NAME_WE)
+add_executable(easy_vulkan_test src/main.cpp ${EASY_VULKAN_TEST_HEADERS})
+target_include_directories(easy_vulkan_test PUBLIC ${EASY_VULKAN_CORE_HEADER_DIRECTORY} ${EASY_VULKAN_TEST_HEADERS})
+target_link_libraries(easy_vulkan_test easy-vulkan glfw)
 
-    ADD_EXECUTABLE(${BASE_NAME} src/${BASE_NAME}.cpp src/test_utility.hpp)
-    target_include_directories(${BASE_NAME} PUBLIC ${EASY_VULKAN_CORE_HEADER_DIRECTORY})
-    target_link_libraries(${BASE_NAME} easy-vulkan glfw)
-ENDFOREACH()
+# FOREACH(F IN LISTS EASY_VULKAN_TEST_FILES)
+#     get_filename_component(FILE_NAME ${F} NAME)
+#     get_filename_component(BASE_NAME ${F} NAME_WE)
+
+#     ADD_EXECUTABLE(${BASE_NAME} src/${BASE_NAME}.cpp src/test_utility.hpp)
+#     target_include_directories(${BASE_NAME} PUBLIC ${EASY_VULKAN_CORE_HEADER_DIRECTORY})
+#     target_link_libraries(${BASE_NAME} easy-vulkan glfw)
+# ENDFOREACH()

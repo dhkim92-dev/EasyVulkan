@@ -2,7 +2,6 @@
 #define __EV_COMMAND_POOL_H__
 
 #include <vulkan/vulkan.h>
-#include "base/ev_device_base.h"
 #include "ev_device.h"
 
 using namespace std;

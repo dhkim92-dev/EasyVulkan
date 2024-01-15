@@ -1,11 +1,9 @@
-#ifndef __EV_COMMAND_BUFFER_TEST_CPP__
-#define __EV_COMMAND_BUFFER_TEST_CPP__
+#ifndef __EV_COMMAND_BUFFER_TEST_HPP__
+#define __EV_COMMAND_BUFFER_TEST_HPP__
 
 #include "test_utility.hpp"
 
-Instance *instance = nullptr;
-Device *device = nullptr;
-CommandPool *command_pool = nullptr;
+extern CommandPool *command_pool;
 
 TEST(COMMAND_BUFFER_TEST, end_command_buffer) {
     CommandBuffer *command_buffer = nullptr;
@@ -35,7 +33,5 @@ TEST(COMMAND_BUFFER_TEST, create_command_buffer) {
 
     delete command_buffer;
 }
-
-COMMAND_POOL_TEST_MAIN()
 
 #endif

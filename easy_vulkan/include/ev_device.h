@@ -81,6 +81,19 @@ namespace EasyVulkan {
 
         uint32_t get_queue_family_index(VkQueueFlags flags) const;
     };
+
+    class DeviceBase {
+        
+        protected:
+
+        Device *_device = nullptr;
+
+        public:
+
+        explicit DeviceBase(Device *device);
+
+        Device* device();
+    };
 }
 
 #endif

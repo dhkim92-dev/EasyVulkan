@@ -1,11 +1,10 @@
-#ifndef __COMMAND_BUFFER_POOL_TEST_CPP__
-#define __COMMAND_BUFFER_POOL_TEST_CPP__
+#ifndef __COMMAND_BUFFER_POOL_TEST_HPP__
+#define __COMMAND_BUFFER_POOL_TEST_HPP__
 
-#include <gtest/gtest.h>
 #include "test_utility.hpp"
 
-Instance* instance = nullptr;
-Device* device = nullptr;
+extern Instance* instance;
+extern Device* device;
 
 TEST(COMMAND_POOL_TEST, create_command_pool_compute) {
     CommandPool *command_pool = new CommandPool(device, VK_QUEUE_COMPUTE_BIT);
@@ -17,7 +16,5 @@ TEST(COMMAND_POOL_TEST, create_command_pool_graphics) {
 
     delete command_pool;
 }
-
-NONE_SURFACE_TEST_MAIN()
 
 #endif

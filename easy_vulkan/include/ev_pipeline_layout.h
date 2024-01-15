@@ -4,7 +4,6 @@
 #include <vulkan/vulkan.h>
 #include <vector>
 #include <algorithm>
-#include "base/ev_device_base.h"
 #include "ev_descriptor_set_layout.h"
 #include "ev_device.h"
 
