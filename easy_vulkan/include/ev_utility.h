@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <cassert>
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <vulkan/vulkan.h>
 
@@ -77,6 +78,8 @@ namespace EasyVulkan {
         vector<VkQueueFamilyProperties> enumerate_queue_families(VkPhysicalDevice physical_device);
 
         vector<VkExtensionProperties> enumerate_device_extensions(VkPhysicalDevice physical_device);
+
+        char* load_shader_code(string path, size_t* size);
     }
 }
 

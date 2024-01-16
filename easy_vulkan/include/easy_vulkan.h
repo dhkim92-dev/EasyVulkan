@@ -16,6 +16,7 @@
 #include "ev_descriptor_pool.h"
 #include "ev_descriptor_set.h"
 #include "ev_pipeline_layout.h"
+#include "ev_shader.h"
 // #include "ev_pipeline.h"
 
 /*-- initializers --*/
