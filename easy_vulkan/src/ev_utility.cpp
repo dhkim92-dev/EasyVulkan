@@ -99,4 +99,22 @@ vector<VkQueueFamilyProperties> Utility::enumerate_queue_families(VkPhysicalDevi
     return properties;
 }
 
+char* Utility::load_shader_code(string path, size_t *size) {
+    assert(size != nullptr);
+    ifstream is(path, ios::binary | ios::in | ios::ate);
+
+    if(!is.is_open()) {
+        throw runtime_error("Could not open shader file " + path);
+    }
+
+    *size = is.tellg();
+    is.seekg(0, ios::beg);
+
+    char *bytes = new char[*size];
+    is.read(bytes, *size);
+    is.close();
+
+    return bytes;
+}
+
 #endif

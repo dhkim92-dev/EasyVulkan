@@ -8,6 +8,7 @@
 #include "ev_image_test.hpp"
 #include "ev_command_pool_test.hpp"
 #include "ev_command_buffer_test.hpp"
+#include "ev_shader_test.hpp"
 
 Instance *instance = nullptr;
 Device *device = nullptr;
