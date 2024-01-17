@@ -8,5 +8,6 @@
 #include "ev_memory_ai.h"
 #include "ev_queue_ci.h"
 #include "ev_queue_si.h"
+#include "ev_render_pass_ci.h"
 
 #endif
